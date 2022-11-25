@@ -10,7 +10,6 @@ export const UserContext = createContext();
 
 export default function App() {
   const [userData, setUserData] = useState(0);
-  console.log(userData);
 
   return (
     <>
@@ -18,9 +17,9 @@ export default function App() {
       <UserContext.Provider value={userData}>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<LoginPage set={setUserData} />} />
+            <Route path="/login" element={<LoginPage set={setUserData} />} />
             <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/home" element={<HomePage set={setUserData} />} />
+            <Route path="/" element={<HomePage set={setUserData} />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
@@ -32,7 +31,7 @@ const GlobalStyle = createGlobalStyle`
   *{
     color: ${colors.font};
     box-sizing: border-box;
-        text-decoration: none;
+    text-decoration: none;
   }
   body{
     background-color: ${colors.background};

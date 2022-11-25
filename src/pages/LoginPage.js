@@ -30,7 +30,7 @@ export default function LoginPage(props) {
   }
   function success(received) {
     props.set(received.data);
-    navigate("/home");
+    navigate("/");
   }
   function fail(data) {
     setLoading(false);

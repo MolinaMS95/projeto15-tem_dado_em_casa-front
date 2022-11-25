@@ -38,7 +38,7 @@ export default function SignUpPage(props) {
   }
   function success(received) {
     props.set(received.data);
-    navigate("/");
+    navigate("/login");
   }
   function fail(data) {
     setLoading(false);
