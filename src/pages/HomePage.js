@@ -47,22 +47,6 @@ export default function HomePage(props) {
             </Product>
           );
         })}
-        <Product>
-          <img src="https://cf.geekdo-images.com/tSuS_euvyGkGy_ZKavd3Lg__original/img/dKqocpEJMXTMWIwq2uo77rGVXTQ=/0x0/filters:format(jpeg)/pic1801794.jpg" />
-          <ProductName>Guerra do Anel</ProductName>
-          <ProductInfo>
-            <ion-icon name="people-outline" />
-            <span>60-500</span>
-            <ion-icon name="timer-outline" />
-            <span>60-500</span>
-            <ion-icon name="star-half-outline" />
-            <span>60-500</span>
-          </ProductInfo>
-          <Price>
-            <p>R$ 1044,38</p>
-            <ion-icon name="cart-outline"></ion-icon>
-          </Price>
-        </Product>
       </ProductList>
     </Container>
   );
