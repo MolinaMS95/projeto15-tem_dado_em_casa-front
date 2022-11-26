@@ -4,7 +4,7 @@ import styled from "styled-components";
 import logo from "../assets/logo.jpg";
 import { productsURL } from "../constants/links";
 
-export default function HomePage(props) {
+export default function HomePage() {
   const [products, setProducts] = useState([]);
   useEffect(() => {
     axios
@@ -16,6 +16,7 @@ export default function HomePage(props) {
         console.log(data);
       });
   }, []);
+
   return (
     <Container>
       <TopBar>
@@ -27,26 +28,24 @@ export default function HomePage(props) {
         </div>
       </TopBar>
       <ProductList>
-        {products.map((prod) => {
-          return (
-            <Product key={prod._id} id={prod._id}>
-              <img src={prod.image} alt="boardgame" />
-              <ProductName>{prod.name}</ProductName>
-              <ProductInfo>
-                <ion-icon name="people-outline" />
-                <span>{prod.players}</span>
-                <ion-icon name="timer-outline" />
-                <span>{prod.time}</span>
-                <ion-icon name="star-half-outline" />
-                <span>{prod.rating}</span>
-              </ProductInfo>
-              <Price>
-                <p>R$ {prod.price}</p>
-                <ion-icon name="cart-outline"></ion-icon>
-              </Price>
-            </Product>
-          );
-        })}
+        {products.map((prod) => (
+          <Product key={prod._id} id={prod._id}>
+            <img src={prod.image} alt="boardgame" />
+            <ProductName>{prod.name}</ProductName>
+            <ProductInfo>
+              <ion-icon name="people-outline" />
+              <span>{prod.players}</span>
+              <ion-icon name="timer-outline" />
+              <span>{prod.time}</span>
+              <ion-icon name="star-half-outline" />
+              <span>{prod.rating}</span>
+            </ProductInfo>
+            <Price>
+              <p>R$ {prod.price}</p>
+              <ion-icon name="cart-outline"></ion-icon>
+            </Price>
+          </Product>
+        ))}
       </ProductList>
     </Container>
   );
