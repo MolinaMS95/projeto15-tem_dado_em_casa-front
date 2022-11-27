@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
@@ -7,11 +7,13 @@ import "../constants/font.css";
 import { colors } from "../constants/colors";
 import { loginURL } from "../constants/links";
 import axios from "axios";
+import { UserContext } from "../App";
 
 export default function LoginPage(props) {
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
   const [loading, setLoading] = useState(false);
+  const { setUserData } = useContext(UserContext);
   const navigate = useNavigate();
 
   function handleSubmit(event) {
@@ -29,7 +31,7 @@ export default function LoginPage(props) {
     axios.post(loginURL, loginInfo).then(success).catch(fail);
   }
   function success(received) {
-    props.set(received.data);
+    setUserData(received.data);
     navigate("/");
   }
   function fail(data) {

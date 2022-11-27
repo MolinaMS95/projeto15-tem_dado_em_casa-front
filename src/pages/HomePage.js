@@ -28,7 +28,7 @@ export default function HomePage() {
         .get(cartURL, {
           headers: { Authorization: `Bearer ${userData.token}` },
         })
-        .then((response) => setCart(response.data.map((item) => item._id)));
+        .then((response) => setCart(response.data.map((item) => item.gameId)));
     }
   }, [userData]);
 
