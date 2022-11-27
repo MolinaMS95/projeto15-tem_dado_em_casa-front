@@ -81,7 +81,7 @@ export default function SignUpPage(props) {
         )}
         {!loading && <Submit type="submit" value="Cadastrar" />}
       </Form>
-      <Link to={`/`}>
+      <Link to={`/login`}>
         <Login>Já tem uma conta? Entre agora!</Login>
       </Link>
     </Container>
