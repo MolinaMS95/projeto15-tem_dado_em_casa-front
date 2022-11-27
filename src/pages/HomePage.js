@@ -80,7 +80,7 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.header`
-  width: 100vw;
+  width: 100%;
 
   position: fixed;
   left: 0px;
