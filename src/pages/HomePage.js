@@ -68,8 +68,7 @@ export default function HomePage() {
   function removeFromCart(gameID) {
     axios
       .delete(
-        cartURL,
-        { game: gameID },
+        `${cartURL}/${gameID}`,
         { headers: { Authorization: `Bearer ${userData.token}` } }
       )
       .then(() => {
