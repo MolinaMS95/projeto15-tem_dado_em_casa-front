@@ -1,11 +1,19 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../assets/logo.jpg";
 import { productsURL } from "../constants/links";
+import Swal from "sweetalert2";
+import { UserContext } from "../App";
+import { cartURL } from "../constants/links";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [products, setProducts] = useState([]);
+  const { userData } = useContext(UserContext);
+  const [cart, setCart] = useState([]);
+  const navigate = useNavigate();
+
   useEffect(() => {
     axios
       .get(productsURL)
@@ -15,7 +23,68 @@ export default function HomePage() {
       .catch((data) => {
         console.log(data);
       });
-  }, []);
+    if (userData) {
+      axios
+        .get(cartURL, {
+          headers: { Authorization: `Bearer ${userData.token}` },
+        })
+        .then((response) => setCart(response.data));
+    }
+  }, [userData]);
+
+  function manageCart(gameID) {
+    if (!userData) {
+      Swal.fire("Você precisa estar logado para isso!");
+      return;
+    }
+    if (!cart.includes(gameID)) {
+      addToCart(gameID);
+    } else {
+      removeFromCart(gameID);
+    }
+  }
+
+  function addToCart(gameID) {
+    axios
+      .post(
+        cartURL,
+        { game: gameID },
+        { headers: { Authorization: `Bearer ${userData.token}` } }
+      )
+      .then(() => {
+        const newCart = [...cart, gameID];
+        setCart(newCart);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data,
+          footer: `Error status ${error.response.status}`,
+        });
+      });
+  }
+
+  function removeFromCart(gameID) {
+    axios
+      .delete(
+        cartURL,
+        { game: gameID },
+        { headers: { Authorization: `Bearer ${userData.token}` } }
+      )
+      .then(() => {
+        const newCart = cart.filter((item) => item !== gameID);
+        setCart(newCart);
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data,
+          footer: `Error status ${error.response.status}`,
+        });
+      });
+  }
 
   return (
     <Container>
@@ -23,13 +92,13 @@ export default function HomePage() {
         <img src={logo} alt="dado d20" />
         <div>
           <ion-icon name="search"></ion-icon>
-          <ion-icon name="cart"></ion-icon>
-          <ion-icon name="person"></ion-icon>
+          <ion-icon name="cart" onClick={() => navigate("/cart")}></ion-icon>
+          <ion-icon name="person" onClick={() => navigate("/login")}></ion-icon>
         </div>
       </TopBar>
       <ProductList>
         {products.map((prod) => (
-          <Product key={prod._id} id={prod._id}>
+          <Product key={prod._id}>
             <img src={prod.image} alt="boardgame" />
             <ProductName>{prod.name}</ProductName>
             <ProductInfo>
@@ -42,7 +111,10 @@ export default function HomePage() {
             </ProductInfo>
             <Price>
               <p>R$ {prod.price}</p>
-              <ion-icon name="cart-outline"></ion-icon>
+              <ion-icon
+                name={cart.includes(prod._id) ? "cart" : "cart-outline"}
+                onClick={() => manageCart(prod._id)}
+              ></ion-icon>
             </Price>
           </Product>
         ))}
