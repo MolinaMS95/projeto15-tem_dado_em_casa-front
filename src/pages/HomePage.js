@@ -67,10 +67,9 @@ export default function HomePage() {
 
   function removeFromCart(gameID) {
     axios
-      .delete(
-        `${cartURL}/${gameID}`,
-        { headers: { Authorization: `Bearer ${userData.token}` } }
-      )
+      .delete(`${cartURL}/${gameID}`, {
+        headers: { Authorization: `Bearer ${userData.token}` },
+      })
       .then(() => {
         const newCart = cart.filter((item) => item !== gameID);
         setCart(newCart);
@@ -91,7 +90,14 @@ export default function HomePage() {
         <img src={logo} alt="dado d20" />
         <div>
           <ion-icon name="search"></ion-icon>
-          <ion-icon name="cart" onClick={() => navigate("/cart")}></ion-icon>
+          <ion-icon
+            name="cart"
+            onClick={() =>
+              !userData
+                ? Swal.fire("Você precisa estar logado para isso!")
+                : navigate("/cart")
+            }
+          ></ion-icon>
           <ion-icon name="person" onClick={() => navigate("/login")}></ion-icon>
         </div>
       </TopBar>
@@ -109,7 +115,7 @@ export default function HomePage() {
               <span>{prod.rating}</span>
             </ProductInfo>
             <Price>
-              <p>R$ {prod.price}</p>
+              <p>R$ {String(prod.price.toFixed(2)).replace(".", ",")}</p>
               <ion-icon
                 name={cart.includes(prod._id) ? "cart" : "cart-outline"}
                 onClick={() => manageCart(prod._id)}
