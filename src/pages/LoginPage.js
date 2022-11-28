@@ -69,16 +69,12 @@ export default function LoginPage(props) {
   );
 }
 const Container = styled.div`
-  width: 100vw;
-  height: 100vh;
-
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 `;
 const Logo = styled.h1`
-  font-family: "Roboto", cursive;
   font-size: 32px;
   font-weight: 400;
 `;
@@ -115,7 +111,7 @@ const Submit = styled.input`
   font-size: 20px;
   font-weight: 700;
 
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
 `;
 
