@@ -8,7 +8,7 @@ import { colors } from "../constants/colors";
 import { signUpURL } from "../constants/links";
 import axios from "axios";
 
-export default function SignUpPage(props) {
+export default function SignUpPage() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
@@ -36,17 +36,16 @@ export default function SignUpPage(props) {
 
     axios.post(signUpURL, signUpInfo).then(success).catch(fail);
   }
-  function success(received) {
-    props.set(received.data);
+  function success() {
     navigate("/login");
   }
-  function fail(data) {
+  function fail() {
     setLoading(false);
     alert("Criação de conta falhou!");
   }
   return (
     <Container>
-      <Logo>MyWallet</Logo>
+      <Logo>Crie sua conta!</Logo>
       <Form onSubmit={handleSubmit}>
         <Field
           placeholder="Nome"
@@ -136,7 +135,7 @@ const Submit = styled.input`
   font-size: 20px;
   font-weight: 700;
 
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
 `;
 

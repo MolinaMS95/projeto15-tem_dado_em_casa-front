@@ -78,7 +78,6 @@ const Container = styled.div`
   justify-content: center;
 `;
 const Logo = styled.h1`
-  font-family: "Roboto", cursive;
   font-size: 32px;
   font-weight: 400;
 `;
@@ -115,7 +114,7 @@ const Submit = styled.input`
   font-size: 20px;
   font-weight: 700;
 
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
 `;
 
