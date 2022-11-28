@@ -36,11 +36,10 @@ export default function SignUpPage(props) {
 
     axios.post(signUpURL, signUpInfo).then(success).catch(fail);
   }
-  function success(received) {
-    props.set(received.data);
+  function success() {
     navigate("/login");
   }
-  function fail(data) {
+  function fail() {
     setLoading(false);
     alert("Criação de conta falhou!");
   }
