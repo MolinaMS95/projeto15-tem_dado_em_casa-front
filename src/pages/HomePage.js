@@ -130,8 +130,6 @@ export default function HomePage() {
 
 const Container = styled.div`
   position: relative;
-  width: 100vw;
-  height: 100vh;
 
   padding: 20px;
 
@@ -140,7 +138,7 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.header`
-  width: 100vw;
+  width: 100%;
 
   position: fixed;
   left: 0px;

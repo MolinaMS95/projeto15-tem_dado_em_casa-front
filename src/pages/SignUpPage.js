@@ -8,7 +8,7 @@ import { colors } from "../constants/colors";
 import { signUpURL } from "../constants/links";
 import axios from "axios";
 
-export default function SignUpPage(props) {
+export default function SignUpPage() {
   const [name, setName] = useState();
   const [email, setEmail] = useState();
   const [pass, setPass] = useState();
@@ -45,7 +45,7 @@ export default function SignUpPage(props) {
   }
   return (
     <Container>
-      <Logo>MyWallet</Logo>
+      <Logo>Crie sua conta!</Logo>
       <Form onSubmit={handleSubmit}>
         <Field
           placeholder="Nome"
@@ -135,7 +135,7 @@ const Submit = styled.input`
   font-size: 20px;
   font-weight: 700;
 
-  border: none;
+  border: 1px solid black;
   border-radius: 5px;
 `;
 
