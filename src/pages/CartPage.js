@@ -63,11 +63,9 @@ const Container = styled.div`
   width: 100vw;
   height: 100vh;
 
-  padding: 20px;
-
   display: flex;
   flex-direction: column;
-  align-items: center;
+  padding: 20px;
 `;
 
 const TopBar = styled.header`
@@ -90,19 +88,18 @@ const TopBar = styled.header`
 `;
 
 const CartDisplay = styled.div`
-  width: 90vw;
-  height: 70vh;
+  width: 90%;
+  height: 70%;
 
   margin-top: 90px;
 
   display: flex;
   flex-direction: column;
-  align-items: center;
 
   position: relative;
-
+  overflow-y: scroll;
   div {
-    width: inherit;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 
