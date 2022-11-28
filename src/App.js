@@ -4,9 +4,9 @@ import LoginPage from "./pages/LoginPage";
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
 import { createGlobalStyle } from "styled-components";
 import { colors } from "./constants/colors";
+import CheckoutPage from "./pages/CheckoutPage";
 
 export const UserContext = createContext();
 

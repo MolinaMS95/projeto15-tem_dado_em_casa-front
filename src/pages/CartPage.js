@@ -45,14 +45,15 @@ export default function CartPage() {
           </>
         )}
       </CartDisplay>
-              <ButtonsContainer>
-          <button onClick={() => navigate("/")}>
-            Voltar para produtos
-          </button>
-          <button onClick={() => navigate("/checkout")} disabled={cart.length === 0}>
-            Prosseguir para o checkout
-          </button>
-        </ButtonsContainer>
+      <ButtonsContainer>
+        <button onClick={() => navigate("/")}>Voltar para produtos</button>
+        <button
+          onClick={() => navigate("/checkout")}
+          disabled={cart.length === 0}
+        >
+          Prosseguir para o checkout
+        </button>
+      </ButtonsContainer>
     </Container>
   );
 }
@@ -70,7 +71,7 @@ const Container = styled.div`
 `;
 
 const TopBar = styled.header`
-  width: 100vw;
+  width: 100%;
 
   position: fixed;
   left: 0px;

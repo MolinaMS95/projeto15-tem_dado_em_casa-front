@@ -1,40 +1,67 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import ReactLoading from "react-loading";
 import "../constants/font.css";
 import { colors } from "../constants/colors";
-import { signUpURL } from "../constants/links";
+import { cartURL, orderURL } from "../constants/links";
 import axios from "axios";
 import "react-auto-complete-address-fields/build/GoogleAutoComplete.css";
+import { UserContext } from "../App";
+import Swal from "sweetalert2";
 
 export default function CheckoutPage() {
+  const { userData } = useContext(UserContext);
   const [address, setAddress] = useState();
   const [phone, setPhone] = useState();
   const [loading, setLoading] = useState(false);
+  const [cart, setCart] = useState([]);
+  const [sum, setSum] = useState(0);
+  const [payment, setPayment] = useState("pix");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get(cartURL, { headers: { Authorization: `Bearer ${userData.token}` } })
+      .then((response) => {
+        setCart(response.data);
+        let total = 0;
+        response.data.forEach((item) => (total += item.price));
+        setSum(total);
+      });
+  }, [userData]);
 
   function handleSubmit(event) {
     event.preventDefault();
     if (address.length === 0 || phone.length === 0) {
       return;
     }
-    const checkoutInfo = {
-      name: address,
-      email: phone,
+    console.log(cart);
+    const orderInfo = {
+      address: address,
+      phone: phone,
+      payment: payment,
+      items: cart,
+      total: sum,
     };
 
     setLoading(true);
 
-    axios.post(signUpURL, checkoutInfo).then(success).catch(fail);
+    axios
+      .post(orderURL, orderInfo, {
+        headers: { Authorization: `Bearer ${userData.token}` },
+      })
+      .then(success)
+      .catch(fail);
   }
+
   function success() {
-    navigate("/login");
+    Swal.fire("Pedido concluído com sucesso!");
+    navigate("/");
   }
   function fail() {
     setLoading(false);
-    alert("Criação de conta falhou!");
+    Swal.fire("Algo deu errado, tente novamente mais tarde.");
   }
   return (
     <Container>
@@ -48,12 +75,16 @@ export default function CheckoutPage() {
         />
         <Field
           placeholder="Telefone"
-          type="number"
+          type="text"
           name="email"
           onChange={(e) => setPhone(e.target.value)}
         />
         <p>Selecione o método de pagamento:</p>
-        <Dropdown id="payment" name="payment">
+        <Dropdown
+          id="payment"
+          name="payment"
+          onChange={(e) => setPayment(e.target.value)}
+        >
           <option value="pix">Pix</option>
           <option value="credit">Cartão de Crédito</option>
           <option value="boleto">Boleto</option>
