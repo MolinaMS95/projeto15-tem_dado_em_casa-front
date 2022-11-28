@@ -56,8 +56,22 @@ export default function CheckoutPage() {
   }
 
   function success() {
-    Swal.fire("Pedido concluído com sucesso!");
-    navigate("/");
+    axios
+      .delete(`${cartURL}/?key=true`, {
+        headers: { Authorization: `Bearer ${userData.token}` },
+      })
+      .then(() => {
+        Swal.fire("Pedido concluído com sucesso!");
+        navigate("/");
+      })
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data,
+          footer: `Error status ${error.response.status}`,
+        });
+      });
   }
   function fail() {
     setLoading(false);
